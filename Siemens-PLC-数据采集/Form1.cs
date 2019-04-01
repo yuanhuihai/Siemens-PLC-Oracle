@@ -16,7 +16,7 @@ namespace Siemens_PLC_数据采集
     {
         private S7Client Client;
         private byte[] Buffer = new byte[65536];
-
+ 
 
         public Form1()
         {
@@ -33,10 +33,6 @@ namespace Siemens_PLC_数据采集
             消息列表.Text = Client.ErrorText(Result) + " (" + Client.ExecTime().ToString() + " ms)";
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -72,6 +68,7 @@ namespace Siemens_PLC_数据采集
                 connectPlc.Enabled = false;
                 disconnectPlc.Enabled = true;
                 connectStatus.BackColor = Color.Green;
+                startRead.Enabled = true;
 
                 消息列表.Items.Add("建立IP地址为 " +textBox1.Text + "的连接成功");
                 if (消息列表.Items.Count == 40)
@@ -163,10 +160,7 @@ namespace Siemens_PLC_数据采集
         }
 
 
-        private void textBox5_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+     
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -175,24 +169,25 @@ namespace Siemens_PLC_数据采集
 
         private void startRead_Click(object sender, EventArgs e)
         {
+            
+            timer1.Start();
+        }
 
+        private void getDbwValues()
+        {
+            if (消息列表.Items.Count == 3)
+            {
+                消息列表.Items.Clear();
+            }
             ReadDbw();
             int Pos = System.Convert.ToInt32(textBox7.Text);
             int S7Int = S7.GetIntAt(Buffer, Pos);
             textBox8.Text = System.Convert.ToString(S7Int);
             textBox8.Enabled = false;
-            消息列表.Items.Add("从DB"+textBox6.Text+"获取到的DBW"+textBox7.Text+"的值是"+System.Convert.ToString(S7Int));
+            消息列表.Items.Add(DateTime.Now.ToString());
+            消息列表.Items.Add("从DB" + textBox6.Text + "获取到的DBW" + textBox7.Text + "的值是" + System.Convert.ToString(S7Int));
             消息列表.Items.Add("---");
-            if (消息列表.Items.Count == 20)
-            {
-                消息列表.Items.Clear();
-            }
-
-        }
-
-        private void textBox6_TextChanged(object sender, EventArgs e)
-        {
-
+           
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -215,7 +210,39 @@ namespace Siemens_PLC_数据采集
                 消息列表.Items.Add("连接数据库"+ dataSource + "/" + orcname + "成功");
                 OcStatus.BackColor = Color.Green;
                 OracleConnect.Enabled = false;
+                orcName.Enabled = false;
+                userId.Enabled = false;
+                userPw.Enabled = false;
+
+                string str_sqlstr = "SELECT TABLE_NAME FROM USER_TABLES";
+                string str_sqlTable = "USER_TABLES";
+
+                OracleDataAdapter orcda = new OracleDataAdapter(str_sqlstr, myCon);
+                DataSet myds = new DataSet();
+                orcda.Fill(myds, str_sqlTable);
+                dataGridView1.DataSource = myds.Tables[str_sqlTable];
+
+
             }
+
+
+
+
+        }
+    
+
+ 
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string tableName = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+            oracleTableName.Text = tableName;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            timer1.Interval = System.Convert.ToInt32(readCycle.Text);
+            getDbwValues();
         }
     }
 }

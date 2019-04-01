@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -44,6 +45,7 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.消息列表 = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.textBox8 = new System.Windows.Forms.TextBox();
             this.readStatus = new System.Windows.Forms.Button();
             this.finishRead = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
@@ -52,25 +54,32 @@
             this.label8 = new System.Windows.Forms.Label();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.readCycle = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox8 = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.dataSourceIp = new System.Windows.Forms.TextBox();
-            this.userId = new System.Windows.Forms.TextBox();
-            this.userPw = new System.Windows.Forms.TextBox();
-            this.OracleConnect = new System.Windows.Forms.Button();
-            this.OracleDisconnect = new System.Windows.Forms.Button();
+            this.confirmTable = new System.Windows.Forms.Button();
+            this.oracleTableName = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.orcName = new System.Windows.Forms.TextBox();
             this.OcStatus = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
-            this.orcName = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
+            this.OracleDisconnect = new System.Windows.Forms.Button();
+            this.OracleConnect = new System.Windows.Forms.Button();
+            this.userPw = new System.Windows.Forms.TextBox();
+            this.userId = new System.Windows.Forms.TextBox();
+            this.dataSourceIp = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -93,7 +102,6 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "建立PLC连接";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // textBox4
             // 
@@ -202,11 +210,12 @@
             this.消息列表.ItemHeight = 12;
             this.消息列表.Location = new System.Drawing.Point(372, 21);
             this.消息列表.Name = "消息列表";
-            this.消息列表.Size = new System.Drawing.Size(247, 400);
+            this.消息列表.Size = new System.Drawing.Size(247, 112);
             this.消息列表.TabIndex = 1;
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label17);
             this.groupBox2.Controls.Add(this.textBox8);
             this.groupBox2.Controls.Add(this.readStatus);
             this.groupBox2.Controls.Add(this.finishRead);
@@ -216,14 +225,22 @@
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.textBox6);
             this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.textBox5);
+            this.groupBox2.Controls.Add(this.readCycle);
             this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Location = new System.Drawing.Point(12, 265);
+            this.groupBox2.Location = new System.Drawing.Point(12, 288);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(350, 100);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "循环读取DBW";
+            // 
+            // textBox8
+            // 
+            this.textBox8.Location = new System.Drawing.Point(306, 11);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.ReadOnly = true;
+            this.textBox8.Size = new System.Drawing.Size(40, 21);
+            this.textBox8.TabIndex = 17;
             // 
             // readStatus
             // 
@@ -264,7 +281,7 @@
             // 
             // textBox7
             // 
-            this.textBox7.Location = new System.Drawing.Point(252, 40);
+            this.textBox7.Location = new System.Drawing.Point(292, 40);
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(40, 21);
             this.textBox7.TabIndex = 14;
@@ -272,7 +289,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(221, 43);
+            this.label8.Location = new System.Drawing.Point(261, 43);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(17, 12);
             this.label8.TabIndex = 15;
@@ -280,28 +297,26 @@
             // 
             // textBox6
             // 
-            this.textBox6.Location = new System.Drawing.Point(158, 40);
+            this.textBox6.Location = new System.Drawing.Point(198, 40);
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(40, 21);
             this.textBox6.TabIndex = 12;
-            this.textBox6.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(121, 43);
+            this.label7.Location = new System.Drawing.Point(161, 43);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(29, 12);
             this.label7.TabIndex = 13;
             this.label7.Text = "DB块";
             // 
-            // textBox5
+            // readCycle
             // 
-            this.textBox5.Location = new System.Drawing.Point(68, 38);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(40, 21);
-            this.textBox5.TabIndex = 11;
-            this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
+            this.readCycle.Location = new System.Drawing.Point(68, 38);
+            this.readCycle.Name = "readCycle";
+            this.readCycle.Size = new System.Drawing.Size(40, 21);
+            this.readCycle.TabIndex = 11;
             // 
             // label6
             // 
@@ -312,15 +327,11 @@
             this.label6.TabIndex = 11;
             this.label6.Text = "循环周期";
             // 
-            // textBox8
-            // 
-            this.textBox8.Location = new System.Drawing.Point(306, 11);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(40, 21);
-            this.textBox8.TabIndex = 17;
-            // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.confirmTable);
+            this.groupBox3.Controls.Add(this.oracleTableName);
+            this.groupBox3.Controls.Add(this.label15);
             this.groupBox3.Controls.Add(this.label14);
             this.groupBox3.Controls.Add(this.orcName);
             this.groupBox3.Controls.Add(this.OcStatus);
@@ -335,78 +346,52 @@
             this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Location = new System.Drawing.Point(12, 127);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(350, 120);
+            this.groupBox3.Size = new System.Drawing.Size(350, 155);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "建立数据库连接";
+            this.groupBox3.Text = "建立Oracle数据库连接";
             // 
-            // label10
+            // confirmTable
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(15, 29);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(17, 12);
-            this.label10.TabIndex = 11;
-            this.label10.Text = "IP";
+            this.confirmTable.Location = new System.Drawing.Point(289, 125);
+            this.confirmTable.Name = "confirmTable";
+            this.confirmTable.Size = new System.Drawing.Size(49, 23);
+            this.confirmTable.TabIndex = 21;
+            this.confirmTable.Text = "选择";
+            this.confirmTable.UseVisualStyleBackColor = true;
             // 
-            // label11
+            // oracleTableName
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(15, 60);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(41, 12);
-            this.label11.TabIndex = 12;
-            this.label11.Text = "用户名";
+            this.oracleTableName.Location = new System.Drawing.Point(124, 127);
+            this.oracleTableName.Name = "oracleTableName";
+            this.oracleTableName.ReadOnly = true;
+            this.oracleTableName.Size = new System.Drawing.Size(153, 21);
+            this.oracleTableName.TabIndex = 20;
             // 
-            // label12
+            // label15
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(196, 60);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(29, 12);
-            this.label12.TabIndex = 13;
-            this.label12.Text = "密码";
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(15, 130);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(101, 12);
+            this.label15.TabIndex = 19;
+            this.label15.Text = "选择数据库中表格";
             // 
-            // dataSourceIp
+            // label14
             // 
-            this.dataSourceIp.Location = new System.Drawing.Point(36, 24);
-            this.dataSourceIp.Name = "dataSourceIp";
-            this.dataSourceIp.Size = new System.Drawing.Size(123, 21);
-            this.dataSourceIp.TabIndex = 11;
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(195, 29);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(41, 12);
+            this.label14.TabIndex = 18;
+            this.label14.Text = "实例名";
             // 
-            // userId
+            // orcName
             // 
-            this.userId.Location = new System.Drawing.Point(62, 55);
-            this.userId.Name = "userId";
-            this.userId.Size = new System.Drawing.Size(100, 21);
-            this.userId.TabIndex = 14;
-            // 
-            // userPw
-            // 
-            this.userPw.Location = new System.Drawing.Point(238, 57);
-            this.userPw.Name = "userPw";
-            this.userPw.Size = new System.Drawing.Size(100, 21);
-            this.userPw.TabIndex = 15;
-            // 
-            // OracleConnect
-            // 
-            this.OracleConnect.Location = new System.Drawing.Point(17, 91);
-            this.OracleConnect.Name = "OracleConnect";
-            this.OracleConnect.Size = new System.Drawing.Size(49, 23);
-            this.OracleConnect.TabIndex = 11;
-            this.OracleConnect.Text = "连接";
-            this.OracleConnect.UseVisualStyleBackColor = true;
-            this.OracleConnect.Click += new System.EventHandler(this.OracleConnect_Click);
-            // 
-            // OracleDisconnect
-            // 
-            this.OracleDisconnect.Location = new System.Drawing.Point(124, 91);
-            this.OracleDisconnect.Name = "OracleDisconnect";
-            this.OracleDisconnect.Size = new System.Drawing.Size(49, 23);
-            this.OracleDisconnect.TabIndex = 16;
-            this.OracleDisconnect.Text = "断开";
-            this.OracleDisconnect.UseVisualStyleBackColor = true;
-            this.OracleDisconnect.Click += new System.EventHandler(this.button1_Click_1);
+            this.orcName.Location = new System.Drawing.Point(238, 24);
+            this.orcName.Name = "orcName";
+            this.orcName.Size = new System.Drawing.Size(100, 21);
+            this.orcName.TabIndex = 17;
             // 
             // OcStatus
             // 
@@ -425,27 +410,113 @@
             this.label13.TabIndex = 11;
             this.label13.Text = "状态";
             // 
-            // orcName
+            // OracleDisconnect
             // 
-            this.orcName.Location = new System.Drawing.Point(238, 24);
-            this.orcName.Name = "orcName";
-            this.orcName.Size = new System.Drawing.Size(100, 21);
-            this.orcName.TabIndex = 17;
+            this.OracleDisconnect.Location = new System.Drawing.Point(124, 91);
+            this.OracleDisconnect.Name = "OracleDisconnect";
+            this.OracleDisconnect.Size = new System.Drawing.Size(49, 23);
+            this.OracleDisconnect.TabIndex = 16;
+            this.OracleDisconnect.Text = "断开";
+            this.OracleDisconnect.UseVisualStyleBackColor = true;
+            this.OracleDisconnect.Click += new System.EventHandler(this.button1_Click_1);
             // 
-            // label14
+            // OracleConnect
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(195, 29);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(41, 12);
-            this.label14.TabIndex = 18;
-            this.label14.Text = "实例名";
+            this.OracleConnect.Location = new System.Drawing.Point(17, 91);
+            this.OracleConnect.Name = "OracleConnect";
+            this.OracleConnect.Size = new System.Drawing.Size(49, 23);
+            this.OracleConnect.TabIndex = 11;
+            this.OracleConnect.Text = "连接";
+            this.OracleConnect.UseVisualStyleBackColor = true;
+            this.OracleConnect.Click += new System.EventHandler(this.OracleConnect_Click);
+            // 
+            // userPw
+            // 
+            this.userPw.Location = new System.Drawing.Point(238, 57);
+            this.userPw.Name = "userPw";
+            this.userPw.Size = new System.Drawing.Size(100, 21);
+            this.userPw.TabIndex = 15;
+            // 
+            // userId
+            // 
+            this.userId.Location = new System.Drawing.Point(62, 55);
+            this.userId.Name = "userId";
+            this.userId.Size = new System.Drawing.Size(100, 21);
+            this.userId.TabIndex = 14;
+            // 
+            // dataSourceIp
+            // 
+            this.dataSourceIp.Location = new System.Drawing.Point(36, 24);
+            this.dataSourceIp.Name = "dataSourceIp";
+            this.dataSourceIp.Size = new System.Drawing.Size(123, 21);
+            this.dataSourceIp.TabIndex = 11;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(196, 60);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(29, 12);
+            this.label12.TabIndex = 13;
+            this.label12.Text = "密码";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(15, 60);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(41, 12);
+            this.label11.TabIndex = 12;
+            this.label11.Text = "用户名";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(15, 29);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(17, 12);
+            this.label10.TabIndex = 11;
+            this.label10.Text = "IP";
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(372, 170);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(240, 138);
+            this.dataGridView1.TabIndex = 4;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(374, 151);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(101, 12);
+            this.label16.TabIndex = 22;
+            this.label16.Text = "数据库中表格列表";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(114, 42);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(17, 12);
+            this.label17.TabIndex = 18;
+            this.label17.Text = "ms";
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(639, 465);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.消息列表);
             this.Controls.Add(this.groupBox1);
@@ -459,7 +530,9 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -481,7 +554,7 @@
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox readCycle;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button finishRead;
         private System.Windows.Forms.Button startRead;
@@ -505,6 +578,13 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox orcName;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox oracleTableName;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button confirmTable;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
