@@ -48,7 +48,7 @@
   <ItemGroup>
     <Reference Include="Oracle.DataAccess, Version=10.2.0.100, Culture=neutral, PublicKeyToken=89b483f429c47342">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\oracle\product\10.2.0\client_1\BIN\Oracle.DataAccess.dll</HintPath>
+      <HintPath>..\..\..\..\..\Desktop\Oracle.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

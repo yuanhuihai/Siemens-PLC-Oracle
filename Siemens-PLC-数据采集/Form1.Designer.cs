@@ -43,16 +43,17 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.消息列表 = new System.Windows.Forms.ListBox();
+            this.listInfo = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.textBox8 = new System.Windows.Forms.TextBox();
             this.readStatus = new System.Windows.Forms.Button();
             this.finishRead = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.startRead = new System.Windows.Forms.Button();
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.dbwNum = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.dbNum = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.readCycle = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -74,7 +75,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -204,14 +204,14 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "IP地址";
             // 
-            // 消息列表
+            // listInfo
             // 
-            this.消息列表.FormattingEnabled = true;
-            this.消息列表.ItemHeight = 12;
-            this.消息列表.Location = new System.Drawing.Point(372, 21);
-            this.消息列表.Name = "消息列表";
-            this.消息列表.Size = new System.Drawing.Size(247, 112);
-            this.消息列表.TabIndex = 1;
+            this.listInfo.FormattingEnabled = true;
+            this.listInfo.ItemHeight = 12;
+            this.listInfo.Location = new System.Drawing.Point(372, 21);
+            this.listInfo.Name = "listInfo";
+            this.listInfo.Size = new System.Drawing.Size(247, 112);
+            this.listInfo.TabIndex = 1;
             // 
             // groupBox2
             // 
@@ -221,9 +221,9 @@
             this.groupBox2.Controls.Add(this.finishRead);
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.startRead);
-            this.groupBox2.Controls.Add(this.textBox7);
+            this.groupBox2.Controls.Add(this.dbwNum);
             this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.textBox6);
+            this.groupBox2.Controls.Add(this.dbNum);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.readCycle);
             this.groupBox2.Controls.Add(this.label6);
@@ -233,6 +233,15 @@
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "循环读取DBW";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(114, 42);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(17, 12);
+            this.label17.TabIndex = 18;
+            this.label17.Text = "ms";
             // 
             // textBox8
             // 
@@ -279,12 +288,12 @@
             this.startRead.UseVisualStyleBackColor = true;
             this.startRead.Click += new System.EventHandler(this.startRead_Click);
             // 
-            // textBox7
+            // dbwNum
             // 
-            this.textBox7.Location = new System.Drawing.Point(292, 40);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(40, 21);
-            this.textBox7.TabIndex = 14;
+            this.dbwNum.Location = new System.Drawing.Point(292, 40);
+            this.dbwNum.Name = "dbwNum";
+            this.dbwNum.Size = new System.Drawing.Size(40, 21);
+            this.dbwNum.TabIndex = 14;
             // 
             // label8
             // 
@@ -295,12 +304,12 @@
             this.label8.TabIndex = 15;
             this.label8.Text = "字";
             // 
-            // textBox6
+            // dbNum
             // 
-            this.textBox6.Location = new System.Drawing.Point(198, 40);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(40, 21);
-            this.textBox6.TabIndex = 12;
+            this.dbNum.Location = new System.Drawing.Point(198, 40);
+            this.dbNum.Name = "dbNum";
+            this.dbNum.Size = new System.Drawing.Size(40, 21);
+            this.dbNum.TabIndex = 12;
             // 
             // label7
             // 
@@ -434,6 +443,7 @@
             // 
             this.userPw.Location = new System.Drawing.Point(238, 57);
             this.userPw.Name = "userPw";
+            this.userPw.PasswordChar = '*';
             this.userPw.Size = new System.Drawing.Size(100, 21);
             this.userPw.TabIndex = 15;
             // 
@@ -497,15 +507,6 @@
             this.label16.TabIndex = 22;
             this.label16.Text = "数据库中表格列表";
             // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(114, 42);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(17, 12);
-            this.label17.TabIndex = 18;
-            this.label17.Text = "ms";
-            // 
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
@@ -518,12 +519,11 @@
             this.Controls.Add(this.label16);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.消息列表);
+            this.Controls.Add(this.listInfo);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
             this.Name = "Form1";
             this.Text = "Siemens-PLC-Oracle数据采集系统-V1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -550,7 +550,7 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ListBox 消息列表;
+        private System.Windows.Forms.ListBox listInfo;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -558,9 +558,9 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button finishRead;
         private System.Windows.Forms.Button startRead;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox dbwNum;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox dbNum;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button readStatus;
         private System.Windows.Forms.Label label9;

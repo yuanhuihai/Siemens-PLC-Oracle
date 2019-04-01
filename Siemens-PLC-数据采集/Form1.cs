@@ -30,7 +30,7 @@ namespace Siemens_PLC_数据采集
         private void ShowResult(int Result)
         {
             // This function returns a textual explaination of the error code
-            消息列表.Text = Client.ErrorText(Result) + " (" + Client.ExecTime().ToString() + " ms)";
+            listInfo.Text = Client.ErrorText(Result) + " (" + Client.ExecTime().ToString() + " ms)";
         }
 
 
@@ -44,38 +44,57 @@ namespace Siemens_PLC_数据采集
             disconnectPlc.Enabled = false;
             connectStatus.BackColor = Color.DarkGray;
 
-            消息列表.Items.Add("断开IP地址为 " + textBox1.Text + "的连接");
-            if (消息列表.Items.Count == 40)
+            listInfo.Items.Add("断开IP地址为 " + textBox1.Text + "的连接");
+            if (listInfo.Items.Count == 9)
             {
-                消息列表.Items.Clear();
+                listInfo.Items.Clear();
             }
 
         }
 
         private void connectPlc_Click(object sender, EventArgs e)
         {
-            int Result;
-            int Rack = System.Convert.ToInt32(textBox2.Text);
-            int Slot = System.Convert.ToInt32(textBox3.Text);
-            Result = Client.ConnectTo(textBox1.Text, Rack, Slot);
-            ShowResult(Result);
-            if (Result == 0)
+            if (string.IsNullOrEmpty(textBox1.Text))
             {
-
-                textBox1.Enabled = false;
-                textBox2.Enabled = false;
-                textBox3.Enabled = false;
-                connectPlc.Enabled = false;
-                disconnectPlc.Enabled = true;
-                connectStatus.BackColor = Color.Green;
-                startRead.Enabled = true;
-
-                消息列表.Items.Add("建立IP地址为 " +textBox1.Text + "的连接成功");
-                if (消息列表.Items.Count == 40)
+                listInfo.Items.Add("PLC IP 地址不能为空!");
+                textBox1.Focus();
+            }
+            if (string.IsNullOrEmpty(readCycle.Text))
+            {
+                listInfo.Items.Add("PLC机架号不能为空!");
+                textBox2.Focus();
+            }
+            if (string.IsNullOrEmpty(readCycle.Text))
+            {
+                listInfo.Items.Add("PLC插槽不能为空!");
+                textBox3.Focus();
+            }
+            else
+            {
+                int Result;
+                int Rack = System.Convert.ToInt32(textBox2.Text);
+                int Slot = System.Convert.ToInt32(textBox3.Text);
+                Result = Client.ConnectTo(textBox1.Text, Rack, Slot);
+                ShowResult(Result);
+                if (Result == 0)
                 {
-                    消息列表.Items.Clear();
+
+                    textBox1.Enabled = false;
+                    textBox2.Enabled = false;
+                    textBox3.Enabled = false;
+                    connectPlc.Enabled = false;
+                    disconnectPlc.Enabled = true;
+                    connectStatus.BackColor = Color.Green;
+                    startRead.Enabled = true;
+
+                    listInfo.Items.Add("建立IP地址为 " + textBox1.Text + "的连接成功");
+                    if (listInfo.Items.Count == 9)
+                    {
+                        listInfo.Items.Clear();
+                    }
                 }
             }
+           
         }
 
         private void ReadDbw()
@@ -84,7 +103,7 @@ namespace Siemens_PLC_数据采集
             int Size = 10;
             int Result;
 
-            DBNumber = System.Convert.ToInt32(textBox6.Text);
+            DBNumber = System.Convert.ToInt32(dbNum.Text);
             Result = Client.DBRead(DBNumber, 0, Size, Buffer);
             if (Result == 0)
                 HexDump(Buffer, Size);
@@ -154,14 +173,6 @@ namespace Siemens_PLC_数据采集
          
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-
-     
-
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -169,25 +180,46 @@ namespace Siemens_PLC_数据采集
 
         private void startRead_Click(object sender, EventArgs e)
         {
-            
-            timer1.Start();
+            if (string.IsNullOrEmpty(readCycle.Text))
+            {
+                listInfo.Items.Add("循环时间不能为空!");
+                readCycle.Focus();
+            }
+            if (string.IsNullOrEmpty(dbNum.Text))
+            {
+                listInfo.Items.Add("DB字段不能为空!");             
+                dbNum.Focus();
+            }
+            if (string.IsNullOrEmpty(dbwNum.Text))
+            {
+                listInfo.Items.Add("DBW字段不能为空!");
+                dbwNum.Focus();
+            }
+            else
+            {
+                timer1.Start();
+            }
+          
         }
 
         private void getDbwValues()
         {
-            if (消息列表.Items.Count == 3)
+       
+                ReadDbw();
+                int Pos = System.Convert.ToInt32(dbwNum.Text);
+                int S7Int = S7.GetIntAt(Buffer, Pos);
+                textBox8.Text = System.Convert.ToString(S7Int);
+                textBox8.Enabled = false;
+                listInfo.Items.Add(DateTime.Now.ToString());
+                listInfo.Items.Add("从DB" + dbNum.Text + "获取到的DBW" + dbwNum.Text + "的值是" + System.Convert.ToString(S7Int));
+                listInfo.Items.Add("---");
+          
+            if (listInfo.Items.Count == 9)
             {
-                消息列表.Items.Clear();
+                listInfo.Items.Clear();
             }
-            ReadDbw();
-            int Pos = System.Convert.ToInt32(textBox7.Text);
-            int S7Int = S7.GetIntAt(Buffer, Pos);
-            textBox8.Text = System.Convert.ToString(S7Int);
-            textBox8.Enabled = false;
-            消息列表.Items.Add(DateTime.Now.ToString());
-            消息列表.Items.Add("从DB" + textBox6.Text + "获取到的DBW" + textBox7.Text + "的值是" + System.Convert.ToString(S7Int));
-            消息列表.Items.Add("---");
-           
+
+
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -202,32 +234,52 @@ namespace Siemens_PLC_数据采集
             string userid = userId.Text;
             string userpw = userPw.Text;
 
-            string M_str_sqlcon = "Data Source=" + dataSource + "/" + orcname + ";User Id=" + userid + ";Password=" + userpw + "";//定义数据库连接字符串
-            OracleConnection myCon = new OracleConnection(M_str_sqlcon);
-            myCon.Open();
-            if (myCon.State == ConnectionState.Open)
+            if (string.IsNullOrEmpty(dataSourceIp.Text))
             {
-                消息列表.Items.Add("连接数据库"+ dataSource + "/" + orcname + "成功");
-                OcStatus.BackColor = Color.Green;
-                OracleConnect.Enabled = false;
-                orcName.Enabled = false;
-                userId.Enabled = false;
-                userPw.Enabled = false;
+                listInfo.Items.Add("数据库IP地址不能为空!");
+                dataSourceIp.Focus();
+            }
+            if (string.IsNullOrEmpty(orcName.Text))
+            {
+                listInfo.Items.Add("数据库实例名不能为空!");
+                orcName.Focus();
+            }
+            if (string.IsNullOrEmpty(userId.Text))
+            {
+                listInfo.Items.Add("用户名不能为空!");
+                userId.Focus();
+            }
+            if (string.IsNullOrEmpty(userPw.Text))
+            {
+                listInfo.Items.Add("密码不能为空!");
+                userPw.Focus();
+            }
+            else
+            {
+                string M_str_sqlcon = "Data Source=" + dataSource + "/" + orcname + ";User Id=" + userid + ";Password=" + userpw + "";//定义数据库连接字符串
+                OracleConnection myCon = new OracleConnection(M_str_sqlcon);
+                myCon.Open();
+                if (myCon.State == ConnectionState.Open)
+                {
+                    listInfo.Items.Add("连接数据库" + dataSource + "/" + orcname + "成功");
+                    OcStatus.BackColor = Color.Green;
+                    OracleConnect.Enabled = false;
+                    orcName.Enabled = false;
+                    userId.Enabled = false;
+                    userPw.Enabled = false;
 
-                string str_sqlstr = "SELECT TABLE_NAME FROM USER_TABLES";
-                string str_sqlTable = "USER_TABLES";
+                    string str_sqlstr = "SELECT TABLE_NAME FROM USER_TABLES";
+                    string str_sqlTable = "USER_TABLES";
 
-                OracleDataAdapter orcda = new OracleDataAdapter(str_sqlstr, myCon);
-                DataSet myds = new DataSet();
-                orcda.Fill(myds, str_sqlTable);
-                dataGridView1.DataSource = myds.Tables[str_sqlTable];
-
-
+                    OracleDataAdapter orcda = new OracleDataAdapter(str_sqlstr, myCon);
+                    DataSet myds = new DataSet();
+                    orcda.Fill(myds, str_sqlTable);
+                    dataGridView1.DataSource = myds.Tables[str_sqlTable];
+                }
             }
 
 
-
-
+           
         }
     
 
