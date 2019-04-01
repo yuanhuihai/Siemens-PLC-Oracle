@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2047
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Siemens-PLC-数据采集", "Siemens-PLC-数据采集\Siemens-PLC-数据采集.csproj", "{89DC7116-C4DE-4371-9382-64EBAAB057D5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89DC7116-C4DE-4371-9382-64EBAAB057D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89DC7116-C4DE-4371-9382-64EBAAB057D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89DC7116-C4DE-4371-9382-64EBAAB057D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89DC7116-C4DE-4371-9382-64EBAAB057D5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {57B266F9-F673-4A4C-97D1-0AEC9D67C28F}
+	EndGlobalSection
+EndGlobal
