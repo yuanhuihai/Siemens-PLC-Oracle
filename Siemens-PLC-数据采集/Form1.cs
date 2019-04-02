@@ -209,7 +209,10 @@ namespace Siemens_PLC_数据采集
                 listInfo.Items.Add(DateTime.Now.ToString());
                 listInfo.Items.Add("从DB" + dbNum.Text + "获取到的DBW" + dbwNum.Text + "的值是" + System.Convert.ToString(S7Int));
                 listInfo.Items.Add("---");
-               
+                if(listInfo.Items.Count >15){
+                listInfo.Items.Clear();
+            }
+            
 
 
 
@@ -294,10 +297,7 @@ namespace Siemens_PLC_数据采集
         {
             timer1.Interval = System.Convert.ToInt32(readCycle.Text);
             getDbwValues();
-            if (listInfo.Items.Count == 6)
-            {
-                listInfo.Items.Clear();
-            }
+           
             readStatus.BackColor = Color.Green;
         }
 
