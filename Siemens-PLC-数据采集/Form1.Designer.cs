@@ -58,14 +58,10 @@
             this.readCycle = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.confirmTable = new System.Windows.Forms.Button();
             this.oracleTableName = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.orcName = new System.Windows.Forms.TextBox();
-            this.OcStatus = new System.Windows.Forms.Button();
-            this.label13 = new System.Windows.Forms.Label();
-            this.OracleDisconnect = new System.Windows.Forms.Button();
             this.OracleConnect = new System.Windows.Forms.Button();
             this.userPw = new System.Windows.Forms.TextBox();
             this.userId = new System.Windows.Forms.TextBox();
@@ -76,6 +72,8 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label16 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.confirmTable = new System.Windows.Forms.Button();
+            this.reSetOracle = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -267,7 +265,7 @@
             this.finishRead.TabIndex = 16;
             this.finishRead.Text = "结束";
             this.finishRead.UseVisualStyleBackColor = true;
-            this.finishRead.Click += new System.EventHandler(this.button1_Click);
+            this.finishRead.Click += new System.EventHandler(this.finishRead_Click);
             // 
             // label9
             // 
@@ -338,14 +336,12 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.reSetOracle);
             this.groupBox3.Controls.Add(this.confirmTable);
             this.groupBox3.Controls.Add(this.oracleTableName);
             this.groupBox3.Controls.Add(this.label15);
             this.groupBox3.Controls.Add(this.label14);
             this.groupBox3.Controls.Add(this.orcName);
-            this.groupBox3.Controls.Add(this.OcStatus);
-            this.groupBox3.Controls.Add(this.label13);
-            this.groupBox3.Controls.Add(this.OracleDisconnect);
             this.groupBox3.Controls.Add(this.OracleConnect);
             this.groupBox3.Controls.Add(this.userPw);
             this.groupBox3.Controls.Add(this.userId);
@@ -359,15 +355,6 @@
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "建立Oracle数据库连接";
-            // 
-            // confirmTable
-            // 
-            this.confirmTable.Location = new System.Drawing.Point(289, 125);
-            this.confirmTable.Name = "confirmTable";
-            this.confirmTable.Size = new System.Drawing.Size(49, 23);
-            this.confirmTable.TabIndex = 21;
-            this.confirmTable.Text = "选择";
-            this.confirmTable.UseVisualStyleBackColor = true;
             // 
             // oracleTableName
             // 
@@ -401,33 +388,6 @@
             this.orcName.Name = "orcName";
             this.orcName.Size = new System.Drawing.Size(100, 21);
             this.orcName.TabIndex = 17;
-            // 
-            // OcStatus
-            // 
-            this.OcStatus.Location = new System.Drawing.Point(286, 91);
-            this.OcStatus.Name = "OcStatus";
-            this.OcStatus.Size = new System.Drawing.Size(49, 23);
-            this.OcStatus.TabIndex = 12;
-            this.OcStatus.UseVisualStyleBackColor = true;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(230, 97);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(29, 12);
-            this.label13.TabIndex = 11;
-            this.label13.Text = "状态";
-            // 
-            // OracleDisconnect
-            // 
-            this.OracleDisconnect.Location = new System.Drawing.Point(124, 91);
-            this.OracleDisconnect.Name = "OracleDisconnect";
-            this.OracleDisconnect.Size = new System.Drawing.Size(49, 23);
-            this.OracleDisconnect.TabIndex = 16;
-            this.OracleDisconnect.Text = "断开";
-            this.OracleDisconnect.UseVisualStyleBackColor = true;
-            this.OracleDisconnect.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // OracleConnect
             // 
@@ -511,11 +471,31 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // confirmTable
+            // 
+            this.confirmTable.Location = new System.Drawing.Point(289, 125);
+            this.confirmTable.Name = "confirmTable";
+            this.confirmTable.Size = new System.Drawing.Size(49, 23);
+            this.confirmTable.TabIndex = 21;
+            this.confirmTable.Text = "选择";
+            this.confirmTable.UseVisualStyleBackColor = true;
+            this.confirmTable.Click += new System.EventHandler(this.confirmTable_Click);
+            // 
+            // reSetOracle
+            // 
+            this.reSetOracle.Location = new System.Drawing.Point(72, 91);
+            this.reSetOracle.Name = "reSetOracle";
+            this.reSetOracle.Size = new System.Drawing.Size(49, 23);
+            this.reSetOracle.TabIndex = 22;
+            this.reSetOracle.Text = "重置";
+            this.reSetOracle.UseVisualStyleBackColor = true;
+            this.reSetOracle.Click += new System.EventHandler(this.reSetOracle_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(639, 465);
+            this.ClientSize = new System.Drawing.Size(637, 522);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.groupBox3);
@@ -567,24 +547,22 @@
         private System.Windows.Forms.TextBox textBox8;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Button OracleDisconnect;
         private System.Windows.Forms.Button OracleConnect;
         private System.Windows.Forms.TextBox userPw;
         private System.Windows.Forms.TextBox userId;
         private System.Windows.Forms.TextBox dataSourceIp;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Button OcStatus;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox orcName;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox oracleTableName;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button confirmTable;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button confirmTable;
+        private System.Windows.Forms.Button reSetOracle;
     }
 }
 

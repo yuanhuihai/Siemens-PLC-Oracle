@@ -16,7 +16,7 @@ namespace Siemens_PLC_数据采集
     {
         private S7Client Client;
         private byte[] Buffer = new byte[65536];
- 
+    
 
         public Form1()
         {
@@ -43,7 +43,6 @@ namespace Siemens_PLC_数据采集
             connectPlc.Enabled = true;
             disconnectPlc.Enabled = false;
             connectStatus.BackColor = Color.DarkGray;
-
             listInfo.Items.Add("断开IP地址为 " + textBox1.Text + "的连接");
          
 
@@ -192,6 +191,8 @@ namespace Siemens_PLC_数据采集
             else
             {
                 timer1.Start();
+                startRead.Enabled = false;
+                finishRead.Enabled = true;
             }
           
         }
@@ -215,11 +216,8 @@ namespace Siemens_PLC_数据采集
 
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
+     
+        //数据库建立连接
         private void OracleConnect_Click(object sender, EventArgs e)
         {
             string dataSource = dataSourceIp.Text;
@@ -255,11 +253,12 @@ namespace Siemens_PLC_数据采集
                 if (myCon.State == ConnectionState.Open)
                 {
                     listInfo.Items.Add("连接数据库" + dataSource + "/" + orcname + "成功");
-                    OcStatus.BackColor = Color.Green;
-                    OracleConnect.Enabled = false;
+
+                    dataSourceIp.Enabled = false;
                     orcName.Enabled = false;
                     userId.Enabled = false;
                     userPw.Enabled = false;
+                    OracleConnect.Enabled = false;
 
                     string str_sqlstr = "SELECT TABLE_NAME FROM USER_TABLES";
                     string str_sqlTable = "USER_TABLES";
@@ -268,15 +267,22 @@ namespace Siemens_PLC_数据采集
                     DataSet myds = new DataSet();
                     orcda.Fill(myds, str_sqlTable);
                     dataGridView1.DataSource = myds.Tables[str_sqlTable];
+                    myCon.Close();
+                    listInfo.Items.Add("断开数据库连接");
                 }
-            }
-
-
-           
+            }    
         }
-    
+        private void reSetOracle_Click(object sender, EventArgs e)
+        {
+            dataSourceIp.Enabled = true;
+            orcName.Enabled = true;
+            userId.Enabled = true;
+            userPw.Enabled = true;
+            OracleConnect.Enabled = true;
+        }
 
- 
+
+
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -294,5 +300,20 @@ namespace Siemens_PLC_数据采集
             }
             readStatus.BackColor = Color.Green;
         }
+
+        private void finishRead_Click(object sender, EventArgs e)
+        {
+            timer1.Stop();
+            listInfo.Items.Add("数据采集结束");
+            finishRead.Enabled = false;
+            startRead.Enabled = true;
+        }
+
+        private void confirmTable_Click(object sender, EventArgs e)
+        {
+            dataGridView1.DataSource = null;
+        }
+
+      
     }
 }
