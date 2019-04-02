@@ -45,10 +45,7 @@ namespace Siemens_PLC_数据采集
             connectStatus.BackColor = Color.DarkGray;
 
             listInfo.Items.Add("断开IP地址为 " + textBox1.Text + "的连接");
-            if (listInfo.Items.Count == 9)
-            {
-                listInfo.Items.Clear();
-            }
+         
 
         }
 
@@ -59,12 +56,12 @@ namespace Siemens_PLC_数据采集
                 listInfo.Items.Add("PLC IP 地址不能为空!");
                 textBox1.Focus();
             }
-            if (string.IsNullOrEmpty(readCycle.Text))
+            if (string.IsNullOrEmpty(textBox2.Text))
             {
                 listInfo.Items.Add("PLC机架号不能为空!");
                 textBox2.Focus();
             }
-            if (string.IsNullOrEmpty(readCycle.Text))
+            if (string.IsNullOrEmpty(textBox3.Text))
             {
                 listInfo.Items.Add("PLC插槽不能为空!");
                 textBox3.Focus();
@@ -88,10 +85,7 @@ namespace Siemens_PLC_数据采集
                     startRead.Enabled = true;
 
                     listInfo.Items.Add("建立IP地址为 " + textBox1.Text + "的连接成功");
-                    if (listInfo.Items.Count == 9)
-                    {
-                        listInfo.Items.Clear();
-                    }
+                  
                 }
             }
            
@@ -204,7 +198,8 @@ namespace Siemens_PLC_数据采集
 
         private void getDbwValues()
         {
-       
+
+           
                 ReadDbw();
                 int Pos = System.Convert.ToInt32(dbwNum.Text);
                 int S7Int = S7.GetIntAt(Buffer, Pos);
@@ -213,11 +208,9 @@ namespace Siemens_PLC_数据采集
                 listInfo.Items.Add(DateTime.Now.ToString());
                 listInfo.Items.Add("从DB" + dbNum.Text + "获取到的DBW" + dbwNum.Text + "的值是" + System.Convert.ToString(S7Int));
                 listInfo.Items.Add("---");
-          
-            if (listInfo.Items.Count == 9)
-            {
-                listInfo.Items.Clear();
-            }
+               
+
+
 
 
         }
@@ -295,6 +288,11 @@ namespace Siemens_PLC_数据采集
         {
             timer1.Interval = System.Convert.ToInt32(readCycle.Text);
             getDbwValues();
+            if (listInfo.Items.Count == 6)
+            {
+                listInfo.Items.Clear();
+            }
+            readStatus.BackColor = Color.Green;
         }
     }
 }
