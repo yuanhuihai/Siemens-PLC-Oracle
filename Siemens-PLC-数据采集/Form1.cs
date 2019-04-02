@@ -209,7 +209,7 @@ namespace Siemens_PLC_数据采集
                 listInfo.Items.Add(DateTime.Now.ToString());
                 listInfo.Items.Add("从DB" + dbNum.Text + "获取到的DBW" + dbwNum.Text + "的值是" + System.Convert.ToString(S7Int));
                 listInfo.Items.Add("---");
-                if(listInfo.Items.Count >15){
+                if(listInfo.Items.Count >20){
                 listInfo.Items.Clear();
             }
             
