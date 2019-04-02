@@ -314,6 +314,67 @@ namespace Siemens_PLC_数据采集
             dataGridView1.DataSource = null;
         }
 
-      
+        private void listBoxOracle_Click(object sender, EventArgs e)
+        {
+            string dataSource = dataSourceIp.Text;
+            string orcname = orcName.Text;
+            string userid = userId.Text;
+            string userpw = userPw.Text;
+
+            if (string.IsNullOrEmpty(dataSourceIp.Text))
+            {
+                listInfo.Items.Add("数据库IP地址不能为空!");
+                dataSourceIp.Focus();
+            }
+            if (string.IsNullOrEmpty(orcName.Text))
+            {
+                listInfo.Items.Add("数据库实例名不能为空!");
+                orcName.Focus();
+            }
+            if (string.IsNullOrEmpty(userId.Text))
+            {
+                listInfo.Items.Add("用户名不能为空!");
+                userId.Focus();
+            }
+            if (string.IsNullOrEmpty(userPw.Text))
+            {
+                listInfo.Items.Add("密码不能为空!");
+                userPw.Focus();
+            }
+            else
+            {
+                string M_str_sqlcon = "Data Source=" + dataSource + "/" + orcname + ";User Id=" + userid + ";Password=" + userpw + "";//定义数据库连接字符串
+                OracleConnection myCon = new OracleConnection(M_str_sqlcon);
+               
+                myCon.Open();
+                if (myCon.State == ConnectionState.Open)
+                {
+                    listInfo.Items.Add("连接数据库" + dataSource + "/" + orcname + "成功");
+                  
+                    dataSourceIp.Enabled = false;
+                    orcName.Enabled = false;
+                    userId.Enabled = false;
+                    userPw.Enabled = false;
+                    OracleConnect.Enabled = false;
+
+                    string str_sqlstr = "SELECT TABLE_NAME FROM USER_TABLES";
+    
+                    OracleCommand myOrcCom = new OracleCommand(str_sqlstr, myCon);
+
+                    OracleDataReader myOrcRead = myOrcCom.ExecuteReader();
+
+                    while(myOrcRead.Read()){
+                        listInfo.Items.Add(myOrcRead["TABLE_NAME"]);
+                    }
+                    myCon.Close();
+                    listInfo.Items.Add("断开数据库连接");
+                }
+            }
+        }
+
+        private void listInfo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.listBoxTable.Text = this.listInfo.SelectedItem.ToString();
+        }
     }
 }

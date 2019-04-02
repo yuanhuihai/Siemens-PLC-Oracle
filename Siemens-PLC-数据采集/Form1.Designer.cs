@@ -74,6 +74,9 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.confirmTable = new System.Windows.Forms.Button();
             this.reSetOracle = new System.Windows.Forms.Button();
+            this.listBoxOracle = new System.Windows.Forms.Button();
+            this.listBoxTable = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -208,8 +211,9 @@
             this.listInfo.ItemHeight = 12;
             this.listInfo.Location = new System.Drawing.Point(372, 21);
             this.listInfo.Name = "listInfo";
-            this.listInfo.Size = new System.Drawing.Size(247, 112);
+            this.listInfo.Size = new System.Drawing.Size(247, 268);
             this.listInfo.TabIndex = 1;
+            this.listInfo.SelectedIndexChanged += new System.EventHandler(this.listInfo_SelectedIndexChanged);
             // 
             // groupBox2
             // 
@@ -225,7 +229,7 @@
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.readCycle);
             this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Location = new System.Drawing.Point(12, 288);
+            this.groupBox2.Location = new System.Drawing.Point(12, 366);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(350, 100);
             this.groupBox2.TabIndex = 2;
@@ -336,6 +340,9 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.listBoxTable);
+            this.groupBox3.Controls.Add(this.label13);
+            this.groupBox3.Controls.Add(this.listBoxOracle);
             this.groupBox3.Controls.Add(this.reSetOracle);
             this.groupBox3.Controls.Add(this.confirmTable);
             this.groupBox3.Controls.Add(this.oracleTableName);
@@ -351,7 +358,7 @@
             this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Location = new System.Drawing.Point(12, 127);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(350, 155);
+            this.groupBox3.Size = new System.Drawing.Size(350, 233);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "建立Oracle数据库连接";
@@ -451,7 +458,7 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(372, 170);
+            this.dataGridView1.Location = new System.Drawing.Point(379, 319);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(240, 138);
@@ -461,11 +468,11 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(374, 151);
+            this.label16.Location = new System.Drawing.Point(381, 300);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(101, 12);
+            this.label16.Size = new System.Drawing.Size(221, 12);
             this.label16.TabIndex = 22;
-            this.label16.Text = "数据库中表格列表";
+            this.label16.Text = "datagridview方式显示数据库中表格列表";
             // 
             // timer1
             // 
@@ -490,6 +497,33 @@
             this.reSetOracle.Text = "重置";
             this.reSetOracle.UseVisualStyleBackColor = true;
             this.reSetOracle.Click += new System.EventHandler(this.reSetOracle_Click);
+            // 
+            // listBoxOracle
+            // 
+            this.listBoxOracle.Location = new System.Drawing.Point(14, 158);
+            this.listBoxOracle.Name = "listBoxOracle";
+            this.listBoxOracle.Size = new System.Drawing.Size(94, 23);
+            this.listBoxOracle.TabIndex = 23;
+            this.listBoxOracle.Text = "listBox中显示";
+            this.listBoxOracle.UseVisualStyleBackColor = true;
+            this.listBoxOracle.Click += new System.EventHandler(this.listBoxOracle_Click);
+            // 
+            // listBoxTable
+            // 
+            this.listBoxTable.Location = new System.Drawing.Point(123, 194);
+            this.listBoxTable.Name = "listBoxTable";
+            this.listBoxTable.ReadOnly = true;
+            this.listBoxTable.Size = new System.Drawing.Size(153, 21);
+            this.listBoxTable.TabIndex = 25;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(14, 197);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(107, 12);
+            this.label13.TabIndex = 24;
+            this.label13.Text = "listBox中选择表格";
             // 
             // Form1
             // 
@@ -563,6 +597,9 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button confirmTable;
         private System.Windows.Forms.Button reSetOracle;
+        private System.Windows.Forms.TextBox listBoxTable;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button listBoxOracle;
     }
 }
 
